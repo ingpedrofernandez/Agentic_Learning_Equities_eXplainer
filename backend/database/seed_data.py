@@ -428,12 +428,12 @@ def verify_allocations(instrument):
 
 
 def main():
-    print("🚀 Seeding Instrument Data")
+    print("Seeding Instrument Data")
     print("=" * 50)
     print(f"Loading {len(INSTRUMENTS)} instruments...")
 
     # First verify all allocations
-    print("\n📊 Verifying allocation data...")
+    print("\nVerifying allocation data...")
     all_valid = True
     for inst in INSTRUMENTS:
         errors = verify_allocations(inst)
@@ -445,10 +445,10 @@ def main():
         print("\n❌ Some instruments have invalid allocations. Please fix before continuing.")
         exit(1)
 
-    print("  ✅ All allocations valid!")
+    print("All allocations valid!")
 
     # Insert instruments
-    print("\n💾 Inserting instruments...")
+    print("\nInserting instruments...")
     success_count = 0
 
     for inst in INSTRUMENTS:
@@ -456,16 +456,16 @@ def main():
             f"  [{success_count + 1}/{len(INSTRUMENTS)}] {inst['symbol']}: {inst['name'][:40]}..."
         )
         if insert_instrument(inst):
-            print(f"    ✅ Success")
+            print("Success")
             success_count += 1
         else:
-            print(f"    ❌ Failed")
+            print("Failed")
 
     print("\n" + "=" * 50)
     print(f"Seeding complete: {success_count}/{len(INSTRUMENTS)} instruments loaded")
 
     # Verify by querying
-    print("\n🔍 Verifying data...")
+    print("\nVerifying data...")
     try:
         response = client.execute_statement(
             resourceArn=cluster_arn,
@@ -491,10 +491,10 @@ def main():
             print(f"    - {symbol}: {name}")
 
     except ClientError as e:
-        print(f"  ❌ Error verifying: {e}")
+        print("Error verifying: {e}")
 
-    print("\n✅ Seed data loaded successfully!")
-    print("\n📝 Next steps:")
+    print("\nSeed data loaded successfully!")
+    print("\nNext steps:")
     print("1. Create test user and portfolio: uv run create_test_data.py")
     print("2. Test database operations: uv run test_db.py")
 

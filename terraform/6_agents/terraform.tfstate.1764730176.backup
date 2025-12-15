@@ -1,0 +1,1611 @@
+{
+  "version": 4,
+  "terraform_version": "1.13.4",
+  "serial": 75,
+  "lineage": "c21e7c78-2b29-2368-ea34-e1dc1d7550df",
+  "outputs": {
+    "lambda_functions": {
+      "value": {
+        "charter": "alex-charter",
+        "planner": "alex-planner",
+        "reporter": "alex-reporter",
+        "retirement": "alex-retirement",
+        "tagger": "alex-tagger"
+      },
+      "type": [
+        "object",
+        {
+          "charter": "string",
+          "planner": "string",
+          "reporter": "string",
+          "retirement": "string",
+          "tagger": "string"
+        }
+      ]
+    },
+    "setup_instructions": {
+      "value": "    \r\n✅ Agent infrastructure deployed successfully!\r\n    \r\nLambda Functions:\r\n- Planner (Orchestrator): alex-planner\r\n- Tagger: alex-tagger\r\n- Reporter: alex-reporter\r\n- Charter: alex-charter\r\n- Retirement: alex-retirement\r\n    \r\nSQS Queue: alex-analysis-jobs\r\n    \r\nTo test the system:\r\n1. First, package and deploy each agent's code:\r\n   cd backend/planner \u0026\u0026 uv run package_docker.py --deploy\r\n   cd backend/tagger \u0026\u0026 uv run package_docker.py --deploy\r\n   cd backend/reporter \u0026\u0026 uv run package_docker.py --deploy\r\n   cd backend/charter \u0026\u0026 uv run package_docker.py --deploy\r\n   cd backend/retirement \u0026\u0026 uv run package_docker.py --deploy\r\n    \r\n2. Run the full integration test:\r\n   cd backend/planner\r\n   uv run run_full_test.py\r\n    \r\n3. Monitor progress in CloudWatch Logs:\r\n   - /aws/lambda/alex-planner\r\n   - /aws/lambda/alex-tagger\r\n   - /aws/lambda/alex-reporter\r\n   - /aws/lambda/alex-charter\r\n   - /aws/lambda/alex-retirement\r\n    \r\nBedrock Model: us.amazon.nova-pro-v1:0\r\nRegion: us-west-2\r\n",
+      "type": "string"
+    },
+    "sqs_queue_arn": {
+      "value": "arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs",
+      "type": "string"
+    },
+    "sqs_queue_url": {
+      "value": "https://sqs.eu-west-2.amazonaws.com/555108715785/alex-analysis-jobs",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "data",
+      "type": "aws_caller_identity",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "account_id": "555108715785",
+            "arn": "arn:aws:iam::555108715785:user/aiengineer",
+            "id": "555108715785",
+            "user_id": "AIDAYCPYOZUEYJW2GEFRW"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "agent_logs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "charter",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:eu-west-2:555108715785:log-group:/aws/lambda/alex-charter",
+            "id": "/aws/lambda/alex-charter",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/lambda/alex-charter",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Agent": "charter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "charter",
+              "Part": "6",
+              "Project": "alex"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        },
+        {
+          "index_key": "planner",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:eu-west-2:555108715785:log-group:/aws/lambda/alex-planner",
+            "id": "/aws/lambda/alex-planner",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/lambda/alex-planner",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Agent": "planner",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "planner",
+              "Part": "6",
+              "Project": "alex"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        },
+        {
+          "index_key": "reporter",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:eu-west-2:555108715785:log-group:/aws/lambda/alex-reporter",
+            "id": "/aws/lambda/alex-reporter",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/lambda/alex-reporter",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Agent": "reporter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "reporter",
+              "Part": "6",
+              "Project": "alex"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        },
+        {
+          "index_key": "retirement",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:eu-west-2:555108715785:log-group:/aws/lambda/alex-retirement",
+            "id": "/aws/lambda/alex-retirement",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/lambda/alex-retirement",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Agent": "retirement",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "retirement",
+              "Part": "6",
+              "Project": "alex"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        },
+        {
+          "index_key": "tagger",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:eu-west-2:555108715785:log-group:/aws/lambda/alex-tagger",
+            "id": "/aws/lambda/alex-tagger",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/lambda/alex-tagger",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Agent": "tagger",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "tagger",
+              "Part": "6",
+              "Project": "alex"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "lambda_agents_role",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::555108715785:role/alex-lambda-agents-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2025-11-29T02:28:59Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "alex-lambda-agents-role",
+            "inline_policy": [
+              {
+                "name": "alex-lambda-agents-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:logs:eu-west-2:555108715785:*\"},{\"Action\":[\"sqs:ReceiveMessage\",\"sqs:DeleteMessage\",\"sqs:GetQueueAttributes\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs\"},{\"Action\":[\"lambda:InvokeFunction\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:eu-west-2:555108715785:function:alex-*\"},{\"Action\":[\"rds-data:ExecuteStatement\",\"rds-data:BatchExecuteStatement\",\"rds-data:BeginTransaction\",\"rds-data:CommitTransaction\",\"rds-data:RollbackTransaction\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster\"},{\"Action\":[\"secretsmanager:GetSecretValue\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd\"},{\"Action\":[\"s3:GetObject\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::alex-vectors-555108715785\",\"arn:aws:s3:::alex-vectors-555108715785/*\"]},{\"Action\":[\"s3vectors:QueryVectors\",\"s3vectors:GetVectors\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3vectors:eu-west-2:555108715785:bucket/alex-vectors-555108715785/index/*\"},{\"Action\":[\"sagemaker:InvokeEndpoint\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sagemaker:eu-west-2:555108715785:endpoint/alex-embedding-endpoint\"},{\"Action\":[\"bedrock:InvokeModel\",\"bedrock:InvokeModelWithResponseStream\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:bedrock:us-west-2::foundation-model/*\",\"arn:aws:bedrock:us-west-2:*:inference-profile/*\"]}]}"
+              }
+            ],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+            ],
+            "max_session_duration": 3600,
+            "name": "alex-lambda-agents-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "unique_id": "AROAYCPYOZUE3XSFB3LUK"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "lambda_agents_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "alex-lambda-agents-role:alex-lambda-agents-policy",
+            "name": "alex-lambda-agents-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:logs:eu-west-2:555108715785:*\"},{\"Action\":[\"sqs:ReceiveMessage\",\"sqs:DeleteMessage\",\"sqs:GetQueueAttributes\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs\"},{\"Action\":[\"lambda:InvokeFunction\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:eu-west-2:555108715785:function:alex-*\"},{\"Action\":[\"rds-data:ExecuteStatement\",\"rds-data:BatchExecuteStatement\",\"rds-data:BeginTransaction\",\"rds-data:CommitTransaction\",\"rds-data:RollbackTransaction\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster\"},{\"Action\":[\"secretsmanager:GetSecretValue\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd\"},{\"Action\":[\"s3:GetObject\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::alex-vectors-555108715785\",\"arn:aws:s3:::alex-vectors-555108715785/*\"]},{\"Action\":[\"s3vectors:QueryVectors\",\"s3vectors:GetVectors\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3vectors:eu-west-2:555108715785:bucket/alex-vectors-555108715785/index/*\"},{\"Action\":[\"sagemaker:InvokeEndpoint\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sagemaker:eu-west-2:555108715785:endpoint/alex-embedding-endpoint\"},{\"Action\":[\"bedrock:InvokeModel\",\"bedrock:InvokeModelWithResponseStream\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:bedrock:us-west-2::foundation-model/*\",\"arn:aws:bedrock:us-west-2:*:inference-profile/*\"]}]}",
+            "role": "alex-lambda-agents-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_sqs_queue.analysis_jobs",
+            "aws_sqs_queue.analysis_jobs_dlq",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "lambda_agents_basic",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "alex-lambda-agents-role-20251129022859984600000001",
+            "policy_arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+            "role": "alex-lambda-agents-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_event_source_mapping",
+      "name": "planner_sqs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "amazon_managed_kafka_event_source_config": [],
+            "arn": "arn:aws:lambda:eu-west-2:555108715785:event-source-mapping:caab811e-46a9-467a-8904-5cbd842201f0",
+            "batch_size": 1,
+            "bisect_batch_on_function_error": false,
+            "destination_config": [],
+            "document_db_event_source_config": [],
+            "enabled": true,
+            "event_source_arn": "arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs",
+            "filter_criteria": [],
+            "function_arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-planner",
+            "function_name": "arn:aws:lambda:eu-west-2:555108715785:function:alex-planner",
+            "function_response_types": [],
+            "id": "caab811e-46a9-467a-8904-5cbd842201f0",
+            "kms_key_arn": "",
+            "last_modified": "2025-11-29T02:30:00Z",
+            "last_processing_result": "",
+            "maximum_batching_window_in_seconds": 0,
+            "maximum_record_age_in_seconds": 0,
+            "maximum_retry_attempts": 0,
+            "metrics_config": [],
+            "parallelization_factor": 0,
+            "provisioned_poller_config": [],
+            "queues": [],
+            "scaling_config": [],
+            "self_managed_event_source": [],
+            "self_managed_kafka_event_source_config": [],
+            "source_access_configuration": [],
+            "starting_position": "",
+            "starting_position_timestamp": "",
+            "state": "Enabled",
+            "state_transition_reason": "USER_INITIATED",
+            "tags": {},
+            "tags_all": {},
+            "topics": [],
+            "tumbling_window_in_seconds": 0,
+            "uuid": "caab811e-46a9-467a-8904-5cbd842201f0"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_lambda_function.planner",
+            "aws_s3_bucket.lambda_packages",
+            "aws_s3_object.lambda_packages",
+            "aws_sqs_queue.analysis_jobs",
+            "aws_sqs_queue.analysis_jobs_dlq",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "charter",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "x86_64"
+            ],
+            "arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-charter",
+            "code_sha256": "gJq00H7fAl+8CbTYctuVOuVRyF/SGy8qPgZgZvKN4BA=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "environment": [
+              {
+                "variables": {
+                  "AURORA_CLUSTER_ARN": "arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster",
+                  "AURORA_SECRET_ARN": "arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd",
+                  "BEDROCK_MODEL_ID": "us.amazon.nova-pro-v1:0",
+                  "BEDROCK_REGION": "us-west-2",
+                  "DATABASE_NAME": "alex",
+                  "DEFAULT_AWS_REGION": "eu-west-2",
+                  "LANGFUSE_HOST": "https://us.cloud.langfuse.com",
+                  "LANGFUSE_PUBLIC_KEY": "",
+                  "LANGFUSE_SECRET_KEY": "",
+                  "OPENAI_API_KEY": ""
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": null,
+            "function_name": "alex-charter",
+            "handler": "lambda_handler.lambda_handler",
+            "id": "alex-charter",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-charter/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2025-12-03T02:36:46.011+0000",
+            "layers": null,
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/alex-charter",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 1024,
+            "package_type": "Zip",
+            "publish": false,
+            "qualified_arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-charter:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-charter:$LATEST/invocations",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "role": "arn:aws:iam::555108715785:role/alex-lambda-agents-role",
+            "runtime": "python3.12",
+            "s3_bucket": "alex-lambda-packages-555108715785",
+            "s3_key": "charter/charter_lambda.zip",
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "gJq00H7fAl+8CbTYctuVOuVRyF/SGy8qPgZgZvKN4BA=",
+            "source_code_size": 66801227,
+            "tags": {
+              "Agent": "charter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "charter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeout": 300,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "LANGFUSE_SECRET_KEY",
+                  "type": "string"
+                }
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "OPENAI_API_KEY",
+                  "type": "string"
+                }
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_s3_bucket.lambda_packages",
+            "aws_s3_object.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "planner",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "x86_64"
+            ],
+            "arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-planner",
+            "code_sha256": "MD7EmNswDAJ0X6jXObVHg5BzUpZlfpA4lQrrSSarGPw=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "environment": [
+              {
+                "variables": {
+                  "AURORA_CLUSTER_ARN": "arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster",
+                  "AURORA_SECRET_ARN": "arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd",
+                  "BEDROCK_MODEL_ID": "us.amazon.nova-pro-v1:0",
+                  "BEDROCK_REGION": "us-west-2",
+                  "DATABASE_NAME": "alex",
+                  "DEFAULT_AWS_REGION": "eu-west-2",
+                  "LANGFUSE_HOST": "https://us.cloud.langfuse.com",
+                  "LANGFUSE_PUBLIC_KEY": "",
+                  "LANGFUSE_SECRET_KEY": "",
+                  "OPENAI_API_KEY": "",
+                  "POLYGON_API_KEY": "QKXte3DeWAmuXODAjsfEZ9rbELL9nmFU",
+                  "POLYGON_PLAN": "free",
+                  "SAGEMAKER_ENDPOINT": "alex-embedding-endpoint",
+                  "VECTOR_BUCKET": "alex-vectors-555108715785"
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": null,
+            "function_name": "alex-planner",
+            "handler": "lambda_handler.lambda_handler",
+            "id": "alex-planner",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-planner/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2025-12-03T02:36:41.691+0000",
+            "layers": null,
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/alex-planner",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 2048,
+            "package_type": "Zip",
+            "publish": false,
+            "qualified_arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-planner:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-planner:$LATEST/invocations",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "role": "arn:aws:iam::555108715785:role/alex-lambda-agents-role",
+            "runtime": "python3.12",
+            "s3_bucket": "alex-lambda-packages-555108715785",
+            "s3_key": "planner/planner_lambda.zip",
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "MD7EmNswDAJ0X6jXObVHg5BzUpZlfpA4lQrrSSarGPw=",
+            "source_code_size": 66871183,
+            "tags": {
+              "Agent": "orchestrator",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "orchestrator",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeout": 900,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "LANGFUSE_SECRET_KEY",
+                  "type": "string"
+                }
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "OPENAI_API_KEY",
+                  "type": "string"
+                }
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_s3_bucket.lambda_packages",
+            "aws_s3_object.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "reporter",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "x86_64"
+            ],
+            "arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-reporter",
+            "code_sha256": "/q3juHiQf83CULVLgj5xbDPttieB+uQ/2mY4s8ueIA0=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "environment": [
+              {
+                "variables": {
+                  "AURORA_CLUSTER_ARN": "arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster",
+                  "AURORA_SECRET_ARN": "arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd",
+                  "BEDROCK_MODEL_ID": "us.amazon.nova-pro-v1:0",
+                  "BEDROCK_REGION": "us-west-2",
+                  "DATABASE_NAME": "alex",
+                  "DEFAULT_AWS_REGION": "eu-west-2",
+                  "LANGFUSE_HOST": "https://us.cloud.langfuse.com",
+                  "LANGFUSE_PUBLIC_KEY": "",
+                  "LANGFUSE_SECRET_KEY": "",
+                  "OPENAI_API_KEY": "",
+                  "SAGEMAKER_ENDPOINT": "alex-embedding-endpoint"
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": null,
+            "function_name": "alex-reporter",
+            "handler": "lambda_handler.lambda_handler",
+            "id": "alex-reporter",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-reporter/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2025-12-03T02:36:45.600+0000",
+            "layers": null,
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/alex-reporter",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 1024,
+            "package_type": "Zip",
+            "publish": false,
+            "qualified_arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-reporter:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-reporter:$LATEST/invocations",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "role": "arn:aws:iam::555108715785:role/alex-lambda-agents-role",
+            "runtime": "python3.12",
+            "s3_bucket": "alex-lambda-packages-555108715785",
+            "s3_key": "reporter/reporter_lambda.zip",
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "/q3juHiQf83CULVLgj5xbDPttieB+uQ/2mY4s8ueIA0=",
+            "source_code_size": 65961857,
+            "tags": {
+              "Agent": "reporter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "reporter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeout": 300,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "LANGFUSE_SECRET_KEY",
+                  "type": "string"
+                }
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "OPENAI_API_KEY",
+                  "type": "string"
+                }
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_s3_bucket.lambda_packages",
+            "aws_s3_object.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "retirement",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "x86_64"
+            ],
+            "arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-retirement",
+            "code_sha256": "0AA+5zdW0iBUA7xUh0ZycHWUjCx5ItbHJkPUOUJEHGE=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "environment": [
+              {
+                "variables": {
+                  "AURORA_CLUSTER_ARN": "arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster",
+                  "AURORA_SECRET_ARN": "arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd",
+                  "BEDROCK_MODEL_ID": "us.amazon.nova-pro-v1:0",
+                  "BEDROCK_REGION": "us-west-2",
+                  "DATABASE_NAME": "alex",
+                  "DEFAULT_AWS_REGION": "eu-west-2",
+                  "LANGFUSE_HOST": "https://us.cloud.langfuse.com",
+                  "LANGFUSE_PUBLIC_KEY": "",
+                  "LANGFUSE_SECRET_KEY": "",
+                  "OPENAI_API_KEY": ""
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": null,
+            "function_name": "alex-retirement",
+            "handler": "lambda_handler.lambda_handler",
+            "id": "alex-retirement",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-retirement/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2025-12-03T02:36:44.561+0000",
+            "layers": null,
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/alex-retirement",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 1024,
+            "package_type": "Zip",
+            "publish": false,
+            "qualified_arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-retirement:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-retirement:$LATEST/invocations",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "role": "arn:aws:iam::555108715785:role/alex-lambda-agents-role",
+            "runtime": "python3.12",
+            "s3_bucket": "alex-lambda-packages-555108715785",
+            "s3_key": "retirement/retirement_lambda.zip",
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "0AA+5zdW0iBUA7xUh0ZycHWUjCx5ItbHJkPUOUJEHGE=",
+            "source_code_size": 65960717,
+            "tags": {
+              "Agent": "retirement",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "retirement",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeout": 300,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "LANGFUSE_SECRET_KEY",
+                  "type": "string"
+                }
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "OPENAI_API_KEY",
+                  "type": "string"
+                }
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_s3_bucket.lambda_packages",
+            "aws_s3_object.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "tagger",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "x86_64"
+            ],
+            "arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-tagger",
+            "code_sha256": "BaiVSZcIqAFvyF39wAaoyBKh30JGhFfJfALWfl9BhXE=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "environment": [
+              {
+                "variables": {
+                  "AURORA_CLUSTER_ARN": "arn:aws:rds:eu-central-1:555108715785:cluster:alex-aurora-cluster",
+                  "AURORA_SECRET_ARN": "arn:aws:secretsmanager:eu-central-1:555108715785:secret:alex-aurora-credentials-146aaf60-exDsBd",
+                  "BEDROCK_MODEL_ID": "us.amazon.nova-pro-v1:0",
+                  "BEDROCK_REGION": "us-west-2",
+                  "DATABASE_NAME": "alex",
+                  "DEFAULT_AWS_REGION": "eu-west-2",
+                  "LANGFUSE_HOST": "https://us.cloud.langfuse.com",
+                  "LANGFUSE_PUBLIC_KEY": "",
+                  "LANGFUSE_SECRET_KEY": "",
+                  "OPENAI_API_KEY": ""
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": null,
+            "function_name": "alex-tagger",
+            "handler": "lambda_handler.lambda_handler",
+            "id": "alex-tagger",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-tagger/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2025-12-03T02:36:41.339+0000",
+            "layers": null,
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/alex-tagger",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 1024,
+            "package_type": "Zip",
+            "publish": false,
+            "qualified_arn": "arn:aws:lambda:eu-west-2:555108715785:function:alex-tagger:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:555108715785:function:alex-tagger:$LATEST/invocations",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "role": "arn:aws:iam::555108715785:role/alex-lambda-agents-role",
+            "runtime": "python3.12",
+            "s3_bucket": "alex-lambda-packages-555108715785",
+            "s3_key": "tagger/tagger_lambda.zip",
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "BaiVSZcIqAFvyF39wAaoyBKh30JGhFfJfALWfl9BhXE=",
+            "source_code_size": 65960067,
+            "tags": {
+              "Agent": "tagger",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "tagger",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeout": 300,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "LANGFUSE_SECRET_KEY",
+                  "type": "string"
+                }
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "environment"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "variables"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": "OPENAI_API_KEY",
+                  "type": "string"
+                }
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_iam_role.lambda_agents_role",
+            "aws_s3_bucket.lambda_packages",
+            "aws_s3_object.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "lambda_packages",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "acceleration_status": "",
+            "acl": null,
+            "arn": "arn:aws:s3:::alex-lambda-packages-555108715785",
+            "bucket": "alex-lambda-packages-555108715785",
+            "bucket_domain_name": "alex-lambda-packages-555108715785.s3.amazonaws.com",
+            "bucket_prefix": "",
+            "bucket_regional_domain_name": "alex-lambda-packages-555108715785.s3.eu-west-2.amazonaws.com",
+            "cors_rule": [],
+            "force_destroy": false,
+            "grant": [
+              {
+                "id": "399c6ca696a391d60c8abab337166e61ceb1a05f233da4ca6db772647fda9f9c",
+                "permissions": [
+                  "FULL_CONTROL"
+                ],
+                "type": "CanonicalUser",
+                "uri": ""
+              }
+            ],
+            "hosted_zone_id": "Z3GKZC51ZF0DB4",
+            "id": "alex-lambda-packages-555108715785",
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "object_lock_enabled": false,
+            "policy": "",
+            "region": "eu-west-2",
+            "replication_configuration": [],
+            "request_payer": "BucketOwner",
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "kms_master_key_id": "",
+                        "sse_algorithm": "AES256"
+                      }
+                    ],
+                    "bucket_key_enabled": false
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeouts": null,
+            "versioning": [
+              {
+                "enabled": false,
+                "mfa_delete": false
+              }
+            ],
+            "website": [],
+            "website_domain": null,
+            "website_endpoint": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_object",
+      "name": "lambda_packages",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "charter",
+          "schema_version": 0,
+          "attributes": {
+            "acl": null,
+            "arn": "arn:aws:s3:::alex-lambda-packages-555108715785/charter/charter_lambda.zip",
+            "bucket": "alex-lambda-packages-555108715785",
+            "bucket_key_enabled": false,
+            "cache_control": "",
+            "checksum_algorithm": null,
+            "checksum_crc32": "",
+            "checksum_crc32c": "",
+            "checksum_crc64nvme": "",
+            "checksum_sha1": "",
+            "checksum_sha256": "",
+            "content": null,
+            "content_base64": null,
+            "content_disposition": "",
+            "content_encoding": "",
+            "content_language": "",
+            "content_type": "binary/octet-stream",
+            "etag": "d6903b2759d97db5763cdd7b907d36ef-13",
+            "force_destroy": false,
+            "id": "charter/charter_lambda.zip",
+            "key": "charter/charter_lambda.zip",
+            "kms_key_id": null,
+            "metadata": {},
+            "object_lock_legal_hold_status": "",
+            "object_lock_mode": "",
+            "object_lock_retain_until_date": "",
+            "override_provider": [],
+            "server_side_encryption": "AES256",
+            "source": "./../../backend/charter/charter_lambda.zip",
+            "source_hash": null,
+            "storage_class": "STANDARD",
+            "tags": {
+              "Agent": "charter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "charter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "version_id": "",
+            "website_redirect": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        },
+        {
+          "index_key": "planner",
+          "schema_version": 0,
+          "attributes": {
+            "acl": null,
+            "arn": "arn:aws:s3:::alex-lambda-packages-555108715785/planner/planner_lambda.zip",
+            "bucket": "alex-lambda-packages-555108715785",
+            "bucket_key_enabled": false,
+            "cache_control": "",
+            "checksum_algorithm": null,
+            "checksum_crc32": "",
+            "checksum_crc32c": "",
+            "checksum_crc64nvme": "",
+            "checksum_sha1": "",
+            "checksum_sha256": "",
+            "content": null,
+            "content_base64": null,
+            "content_disposition": "",
+            "content_encoding": "",
+            "content_language": "",
+            "content_type": "binary/octet-stream",
+            "etag": "f8a063603dd31f3cda566da8b3c6b3c0-13",
+            "force_destroy": false,
+            "id": "planner/planner_lambda.zip",
+            "key": "planner/planner_lambda.zip",
+            "kms_key_id": null,
+            "metadata": {},
+            "object_lock_legal_hold_status": "",
+            "object_lock_mode": "",
+            "object_lock_retain_until_date": "",
+            "override_provider": [],
+            "server_side_encryption": "AES256",
+            "source": "./../../backend/planner/planner_lambda.zip",
+            "source_hash": null,
+            "storage_class": "STANDARD",
+            "tags": {
+              "Agent": "planner",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "planner",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "version_id": "",
+            "website_redirect": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        },
+        {
+          "index_key": "reporter",
+          "schema_version": 0,
+          "attributes": {
+            "acl": null,
+            "arn": "arn:aws:s3:::alex-lambda-packages-555108715785/reporter/reporter_lambda.zip",
+            "bucket": "alex-lambda-packages-555108715785",
+            "bucket_key_enabled": false,
+            "cache_control": "",
+            "checksum_algorithm": null,
+            "checksum_crc32": "",
+            "checksum_crc32c": "",
+            "checksum_crc64nvme": "",
+            "checksum_sha1": "",
+            "checksum_sha256": "",
+            "content": null,
+            "content_base64": null,
+            "content_disposition": "",
+            "content_encoding": "",
+            "content_language": "",
+            "content_type": "binary/octet-stream",
+            "etag": "bee8cbb5e2ec133537ec475a23e4d3b0-13",
+            "force_destroy": false,
+            "id": "reporter/reporter_lambda.zip",
+            "key": "reporter/reporter_lambda.zip",
+            "kms_key_id": null,
+            "metadata": {},
+            "object_lock_legal_hold_status": "",
+            "object_lock_mode": "",
+            "object_lock_retain_until_date": "",
+            "override_provider": [],
+            "server_side_encryption": "AES256",
+            "source": "./../../backend/reporter/reporter_lambda.zip",
+            "source_hash": null,
+            "storage_class": "STANDARD",
+            "tags": {
+              "Agent": "reporter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "reporter",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "version_id": "",
+            "website_redirect": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        },
+        {
+          "index_key": "retirement",
+          "schema_version": 0,
+          "attributes": {
+            "acl": null,
+            "arn": "arn:aws:s3:::alex-lambda-packages-555108715785/retirement/retirement_lambda.zip",
+            "bucket": "alex-lambda-packages-555108715785",
+            "bucket_key_enabled": false,
+            "cache_control": "",
+            "checksum_algorithm": null,
+            "checksum_crc32": "",
+            "checksum_crc32c": "",
+            "checksum_crc64nvme": "",
+            "checksum_sha1": "",
+            "checksum_sha256": "",
+            "content": null,
+            "content_base64": null,
+            "content_disposition": "",
+            "content_encoding": "",
+            "content_language": "",
+            "content_type": "binary/octet-stream",
+            "etag": "f2ba1f2d1cf1d0bb297fb4962249328d-13",
+            "force_destroy": false,
+            "id": "retirement/retirement_lambda.zip",
+            "key": "retirement/retirement_lambda.zip",
+            "kms_key_id": null,
+            "metadata": {},
+            "object_lock_legal_hold_status": "",
+            "object_lock_mode": "",
+            "object_lock_retain_until_date": "",
+            "override_provider": [],
+            "server_side_encryption": "AES256",
+            "source": "./../../backend/retirement/retirement_lambda.zip",
+            "source_hash": null,
+            "storage_class": "STANDARD",
+            "tags": {
+              "Agent": "retirement",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "retirement",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "version_id": "",
+            "website_redirect": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        },
+        {
+          "index_key": "tagger",
+          "schema_version": 0,
+          "attributes": {
+            "acl": null,
+            "arn": "arn:aws:s3:::alex-lambda-packages-555108715785/tagger/tagger_lambda.zip",
+            "bucket": "alex-lambda-packages-555108715785",
+            "bucket_key_enabled": false,
+            "cache_control": "",
+            "checksum_algorithm": null,
+            "checksum_crc32": "",
+            "checksum_crc32c": "",
+            "checksum_crc64nvme": "",
+            "checksum_sha1": "",
+            "checksum_sha256": "",
+            "content": null,
+            "content_base64": null,
+            "content_disposition": "",
+            "content_encoding": "",
+            "content_language": "",
+            "content_type": "binary/octet-stream",
+            "etag": "27f6ccd8757d50a91b4afbca5dafde74-13",
+            "force_destroy": false,
+            "id": "tagger/tagger_lambda.zip",
+            "key": "tagger/tagger_lambda.zip",
+            "kms_key_id": null,
+            "metadata": {},
+            "object_lock_legal_hold_status": "",
+            "object_lock_mode": "",
+            "object_lock_retain_until_date": "",
+            "override_provider": [],
+            "server_side_encryption": "AES256",
+            "source": "./../../backend/tagger/tagger_lambda.zip",
+            "source_hash": null,
+            "storage_class": "STANDARD",
+            "tags": {
+              "Agent": "tagger",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Agent": "tagger",
+              "Part": "6",
+              "Project": "alex"
+            },
+            "version_id": "",
+            "website_redirect": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.lambda_packages",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "analysis_jobs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs",
+            "content_based_deduplication": false,
+            "deduplication_scope": "",
+            "delay_seconds": 0,
+            "fifo_queue": false,
+            "fifo_throughput_limit": "",
+            "id": "https://sqs.eu-west-2.amazonaws.com/555108715785/alex-analysis-jobs",
+            "kms_data_key_reuse_period_seconds": 300,
+            "kms_master_key_id": "",
+            "max_message_size": 262144,
+            "message_retention_seconds": 86400,
+            "name": "alex-analysis-jobs",
+            "name_prefix": "",
+            "policy": "",
+            "receive_wait_time_seconds": 10,
+            "redrive_allow_policy": "",
+            "redrive_policy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs-dlq\",\"maxReceiveCount\":3}",
+            "sqs_managed_sse_enabled": true,
+            "tags": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeouts": null,
+            "url": "https://sqs.eu-west-2.amazonaws.com/555108715785/alex-analysis-jobs",
+            "visibility_timeout_seconds": 910
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwLCJ1cGRhdGUiOjE4MDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_sqs_queue.analysis_jobs_dlq"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "analysis_jobs_dlq",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:sqs:eu-west-2:555108715785:alex-analysis-jobs-dlq",
+            "content_based_deduplication": false,
+            "deduplication_scope": "",
+            "delay_seconds": 0,
+            "fifo_queue": false,
+            "fifo_throughput_limit": "",
+            "id": "https://sqs.eu-west-2.amazonaws.com/555108715785/alex-analysis-jobs-dlq",
+            "kms_data_key_reuse_period_seconds": 300,
+            "kms_master_key_id": "",
+            "max_message_size": 262144,
+            "message_retention_seconds": 345600,
+            "name": "alex-analysis-jobs-dlq",
+            "name_prefix": "",
+            "policy": "",
+            "receive_wait_time_seconds": 0,
+            "redrive_allow_policy": "",
+            "redrive_policy": "",
+            "sqs_managed_sse_enabled": true,
+            "tags": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "tags_all": {
+              "Part": "6",
+              "Project": "alex"
+            },
+            "timeouts": null,
+            "url": "https://sqs.eu-west-2.amazonaws.com/555108715785/alex-analysis-jobs-dlq",
+            "visibility_timeout_seconds": 30
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwLCJ1cGRhdGUiOjE4MDAwMDAwMDAwMH19"
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

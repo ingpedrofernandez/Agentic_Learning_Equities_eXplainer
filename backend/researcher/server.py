@@ -43,7 +43,7 @@ async def run_research_agent(topic: str = None) -> str:
 
     # Please override these variables with the region you are using
     # Other choices: us-west-2 (for OpenAI OSS models) and eu-central-1
-    REGION = "us-east-1"
+    REGION = "us-west-2"
     os.environ["AWS_REGION_NAME"] = REGION  # LiteLLM's preferred variable
     os.environ["AWS_REGION"] = REGION  # Boto3 standard
     os.environ["AWS_DEFAULT_REGION"] = REGION  # Fallback

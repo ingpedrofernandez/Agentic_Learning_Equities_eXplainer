@@ -19,7 +19,7 @@ def run_packaging(agent_name):
         print(f"  ❌ {agent_name}: Missing package_docker.py")
         return False
 
-    print(f"\n📦 Packaging {agent_name.upper()} agent...")
+    print(f"\nPackaging {agent_name.upper()} agent...")
     print(f"  Running: cd {agent_dir} && uv run package_docker.py")
 
     try:
@@ -36,7 +36,7 @@ def run_packaging(agent_name):
                 print(f"  ✅ Created: {zip_file.name} ({size_mb:.1f} MB)")
                 return True
             else:
-                print(f"  ⚠️  Warning: No zip file found after packaging")
+                print(f"  Warning: No zip file found after packaging")
                 return True
         else:
             print(
@@ -83,7 +83,7 @@ def main():
         print("2. Deploy Lambda functions: cd backend && uv run deploy_all_lambdas.py")
         return 0
     else:
-        print(f"\n⚠️  {total_count - success_count} agents failed to package")
+        print(f"\n {total_count - success_count} agents failed to package")
         return 1
 
 

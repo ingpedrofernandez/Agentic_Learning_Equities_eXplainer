@@ -47,12 +47,8 @@ def test_agent(agent_name, test_file="test_simple.py"):
                 if 'Tagged:' in line or 'Success:' in line or 'Message:' in line:
                     print(f"     {line.strip()}")
     else:
-        print(f"  ❌ {agent_name}: Test failed")
-        if stderr:
-            # Show first error line
-            error_lines = [l for l in stderr.split('\n') if l.strip()]
-            if error_lines:
-                print(f"     Error: {error_lines[0][:100]}")
+       print(f"  ❌ {agent_name}: Test failed")
+       print(f"Output:\n{stdout}\n\nError:\n{stderr}")
     
     return success
 

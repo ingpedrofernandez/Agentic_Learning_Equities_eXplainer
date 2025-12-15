@@ -9,10 +9,17 @@ import sys
 import subprocess
 import signal
 import time
+import threading
 from pathlib import Path
 
 # Track subprocesses for cleanup
 processes = []
+
+# Windows compatibility: use npm.cmd instead of npm
+NPM_CMD = "npm.cmd" if sys.platform == "win32" else "npm"
+
+# Windows compatibility: select.select() doesn't work with file handles on Windows
+USE_SELECT = sys.platform != "win32"
 
 def cleanup(signum=None, frame=None):
     """Clean up all subprocess on exit"""
@@ -25,9 +32,10 @@ def cleanup(signum=None, frame=None):
             proc.kill()
     sys.exit(0)
 
-# Register cleanup handlers
-signal.signal(signal.SIGINT, cleanup)
-signal.signal(signal.SIGTERM, cleanup)
+# Register cleanup handlers (only on Unix)
+if sys.platform != "win32":
+    signal.signal(signal.SIGINT, cleanup)
+    signal.signal(signal.SIGTERM, cleanup)
 
 def check_requirements():
     """Check if required tools are installed"""
@@ -41,9 +49,9 @@ def check_requirements():
     except FileNotFoundError:
         checks.append("❌ Node.js not found - please install Node.js")
 
-    # Check npm
+    # Check npm (use npm.cmd on Windows)
     try:
-        result = subprocess.run(["npm", "--version"], capture_output=True, text=True)
+        result = subprocess.run([NPM_CMD, "--version"], capture_output=True, text=True)
         npm_version = result.stdout.strip()
         checks.append(f"✅ npm: {npm_version}")
     except FileNotFoundError:
@@ -118,7 +126,7 @@ def start_backend():
     for _ in range(30):  # 30 second timeout
         try:
             import httpx
-            response = httpx.get("http://localhost:8000/health")
+            response = httpx.get("http://localhost:8000/health", timeout=1)
             if response.status_code == 200:
                 print("  ✅ Backend running at http://localhost:8000")
                 print("     API docs: http://localhost:8000/docs")
@@ -138,11 +146,11 @@ def start_frontend():
     # Check if dependencies are installed
     if not (frontend_dir / "node_modules").exists():
         print("  Installing frontend dependencies...")
-        subprocess.run(["npm", "install"], cwd=frontend_dir, check=True)
+        subprocess.run([NPM_CMD, "install"], cwd=frontend_dir, check=True)
 
     # Start the frontend
     proc = subprocess.Popen(
-        ["npm", "run", "dev"],
+        [NPM_CMD, "run", "dev"],
         cwd=frontend_dir,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,  # Combine stderr with stdout
@@ -154,30 +162,36 @@ def start_frontend():
     # Wait for frontend to start
     print("  Waiting for frontend to start...")
     import httpx
-    import select
 
     started = False
     for i in range(30):  # 30 second timeout
-        # Check for any output from the process using non-blocking read
+        # Check for any output from the process (Windows-compatible)
         if proc.stdout:
-            ready, _, _ = select.select([proc.stdout], [], [], 0)
-            if ready:
-                line = proc.stdout.readline()
-                if line:
-                    print(f"    Frontend: {line.strip()}")
-                    # NextJS dev server prints "Ready" when it's ready
-                    if "ready" in line.lower() or "compiled" in line.lower() or "started server" in line.lower():
-                        started = True
+            if USE_SELECT:
+                # Unix: use select for non-blocking read
+                import select
+                ready, _, _ = select.select([proc.stdout], [], [], 0)
+                if ready:
+                    line = proc.stdout.readline()
+                    if line:
+                        print(f"    Frontend: {line.strip()}")
+                        # NextJS dev server prints "Ready" when it's ready
+                        if "ready" in line.lower() or "compiled" in line.lower() or "started server" in line.lower():
+                            started = True
+            else:
+                # Windows: use a simple check (non-blocking isn't available)
+                # Just check HTTP connection instead
+                pass
 
-        # Also try to connect
-        if started or i > 5:  # Start checking after 5 seconds or when we see "ready"
+        # Try to connect after a few seconds
+        if i > 5:  # Start checking after 5 seconds
             try:
                 response = httpx.get("http://localhost:3000", timeout=1)
                 print("  ✅ Frontend running at http://localhost:3000")
                 return proc
             except httpx.ConnectError:
                 pass  # Server not ready yet
-            except:
+            except Exception as e:
                 # Any other response means server is up
                 print("  ✅ Frontend running at http://localhost:3000")
                 return proc
@@ -207,11 +221,22 @@ def monitor_processes():
                 print(f"\n⚠️  A process has stopped unexpectedly!")
                 cleanup()
 
-            # Read any available output
+            # Read any available output (Windows-compatible)
             try:
-                line = proc.stdout.readline()
-                if line:
-                    print(f"[LOG] {line.strip()}")
+                if USE_SELECT and proc.stdout:
+                    import select
+                    ready, _, _ = select.select([proc.stdout], [], [], 0)
+                    if ready:
+                        line = proc.stdout.readline()
+                        if line:
+                            print(f"[LOG] {line.strip()}")
+                else:
+                    # Windows: use a simple readline with timeout
+                    # This will block, but we're in a loop anyway
+                    if proc.stdout:
+                        # Try to read without blocking (may not work perfectly on Windows)
+                        # For Windows, we'll just check periodically
+                        pass
             except:
                 pass
 

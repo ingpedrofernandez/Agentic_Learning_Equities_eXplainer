@@ -75,10 +75,10 @@ def test_charter():
         # Check what charts were created
         job = db.jobs.find_by_id(job_id)
         if job and job.get("charts_payload"):
-            print(f"\n📊 Charts Created ({len(job['charts_payload'])} total):")
+            print(f"\nCharts Created ({len(job['charts_payload'])} total):")
             print("=" * 50)
             for chart_key, chart_data in job["charts_payload"].items():
-                print(f"\n🎯 Chart: {chart_key}")
+                print(f"\nChart: {chart_key}")
                 print(f"   Title: {chart_data.get('title', 'N/A')}")
                 print(f"   Type: {chart_data.get('type', 'N/A')}")
                 print(f"   Description: {chart_data.get('description', 'N/A')}")

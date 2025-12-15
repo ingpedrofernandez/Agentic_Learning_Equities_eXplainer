@@ -73,7 +73,7 @@ def test_reporter():
         job = db.jobs.find_by_id(job_id)
         if job and job.get('report_payload'):
             payload = job['report_payload']
-            print(f"✅ Report data found in database")
+            print(f"Report data found in database")
             print(f"Payload keys: {list(payload.keys())}")
             
             if 'content' in payload:
@@ -100,7 +100,7 @@ def test_reporter():
                     if contains_reasoning:
                         print("⚠️  WARNING: Report may contain reasoning/thinking text")
                     else:
-                        print("✅ Report appears to be final output only (no reasoning detected)")
+                        print("Report appears to be final output only (no reasoning detected)")
                     
                     # Show first 500 characters and last 200 characters
                     print(f"\nFirst 500 characters:")

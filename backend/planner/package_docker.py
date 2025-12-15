@@ -80,20 +80,31 @@ def package_lambda():
         shutil.copy(planner_dir / "prices.py", package_dir)
         shutil.copy(planner_dir / "observability.py", package_dir)
         
-        # Create the zip file
+         # Create the zip file using Python's zipfile module (cross-platform)
         zip_path = planner_dir / "planner_lambda.zip"
         
         # Remove old zip if it exists
         if zip_path.exists():
             zip_path.unlink()
         
-        # Create new zip
+        # Create new zip using Python's zipfile module
         print(f"Creating zip file: {zip_path}")
-        run_command(
-            ["zip", "-r", str(zip_path), "."],
-            cwd=str(package_dir)
-        )
+        import zipfile
+        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, dirs, files in os.walk(package_dir):
+                # Skip __pycache__ directories
+                dirs[:] = [d for d in dirs if d != '__pycache__']
+                
+                for file in files:
+                    # Skip .pyc files
+                    if file.endswith('.pyc'):
+                        continue
+                    
+                    file_path = Path(root) / file
+                    arcname = file_path.relative_to(package_dir)
+                    zipf.write(file_path, arcname)
         
+
         # Get file size
         size_mb = zip_path.stat().st_size / (1024 * 1024)
         print(f"Package created: {zip_path} ({size_mb:.1f} MB)")

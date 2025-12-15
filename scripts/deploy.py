@@ -19,6 +19,10 @@ import time
 from pathlib import Path
 
 
+# Windows compatibility: use npm.cmd instead of npm
+NPM_CMD = "npm.cmd" if sys.platform == "win32" else "npm"
+
+
 def run_command(cmd, cwd=None, check=True, capture_output=False, env=None):
     """Run a command and optionally capture output."""
     print(f"Running: {' '.join(cmd) if isinstance(cmd, list) else cmd}")
@@ -44,7 +48,7 @@ def check_prerequisites():
     tools = {
         "docker": "Docker is required for Lambda packaging",
         "terraform": "Terraform is required for infrastructure deployment",
-        "npm": "npm is required for building the frontend",
+        NPM_CMD: "npm is required for building the frontend",
         "aws": "AWS CLI is required for S3 sync and CloudFront invalidation"
     }
 
@@ -110,7 +114,7 @@ def build_frontend(api_url=None):
     node_modules = frontend_dir / "node_modules"
     if not node_modules.exists():
         print("  Installing dependencies...")
-        run_command(["npm", "install"], cwd=frontend_dir)
+        run_command([NPM_CMD, "install"], cwd=frontend_dir)
 
     # If API URL is provided, create .env.production.local to override .env.local
     if api_url:
@@ -152,7 +156,7 @@ def build_frontend(api_url=None):
     # Set NODE_ENV to production to ensure .env.production is used
     build_env = os.environ.copy()
     build_env["NODE_ENV"] = "production"
-    run_command(["npm", "run", "build"], cwd=frontend_dir, env=build_env)
+    run_command([NPM_CMD, "run", "build"], cwd=frontend_dir, env=build_env)
 
     # Verify the build
     out_dir = frontend_dir / "out"

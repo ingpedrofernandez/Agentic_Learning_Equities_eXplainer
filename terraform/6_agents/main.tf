@@ -171,7 +171,13 @@ resource "aws_iam_role_policy" "lambda_agents_policy" {
         ]
         Resource = [
           "arn:aws:bedrock:${var.bedrock_region}::foundation-model/*",
-          "arn:aws:bedrock:${var.bedrock_region}:*:inference-profile/*"
+          "arn:aws:bedrock:${var.bedrock_region}:*:inference-profile/*",
+           # Also allow us-east-1 in case LiteLLM defaults there
+          "arn:aws:bedrock:us-east-1::foundation-model/*",
+          "arn:aws:bedrock:us-east-1:*:inference-profile/*",
+          # Also allow us-east-2 in case LiteLLM defaults there
+          "arn:aws:bedrock:us-east-2::foundation-model/*",
+          "arn:aws:bedrock:us-east-2:*:inference-profile/*"
         ]
       }
     ]

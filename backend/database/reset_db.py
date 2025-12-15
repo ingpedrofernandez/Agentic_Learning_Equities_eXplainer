@@ -15,7 +15,7 @@ from decimal import Decimal
 
 def drop_all_tables(db: DataAPIClient):
     """Drop all tables in correct order (respecting foreign keys)"""
-    print("🗑️  Dropping existing tables...")
+    print("Dropping existing tables...")
     
     # Order matters due to foreign key constraints
     tables_to_drop = [
@@ -29,21 +29,21 @@ def drop_all_tables(db: DataAPIClient):
     for table in tables_to_drop:
         try:
             db.execute(f"DROP TABLE IF EXISTS {table} CASCADE")
-            print(f"   ✅ Dropped {table}")
+            print(f"Dropped {table}")
         except Exception as e:
-            print(f"   ⚠️  Error dropping {table}: {e}")
+            print(f"Error dropping {table}: {e}")
     
     # Also drop the function
     try:
         db.execute("DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE")
-        print(f"   ✅ Dropped update_updated_at_column function")
+        print(f"Dropped update_updated_at_column function")
     except Exception as e:
-        print(f"   ⚠️  Error dropping function: {e}")
+        print(f"Error dropping function: {e}")
 
 
 def create_test_data(db_models: Database):
     """Create test user with sample portfolio"""
-    print("\n👤 Creating test user and portfolio...")
+    print("\nCreating test user and portfolio...")
     
     # Create test user with Pydantic validation
     user_data = UserCreate(
@@ -56,7 +56,7 @@ def create_test_data(db_models: Database):
     # Check if user exists
     existing = db_models.users.find_by_clerk_id('test_user_001')
     if existing:
-        print("   ℹ️  Test user already exists")
+        print("Test user already exists")
     else:
         # Use validated data from Pydantic model
         validated = user_data.model_dump()
@@ -66,7 +66,7 @@ def create_test_data(db_models: Database):
             years_until_retirement=validated['years_until_retirement'],
             target_retirement_income=validated['target_retirement_income']
         )
-        print("   ✅ Created test user")
+        print("Created test user")
     
     # Create test accounts with Pydantic validation
     accounts = [
@@ -93,7 +93,7 @@ def create_test_data(db_models: Database):
     user_accounts = db_models.accounts.find_by_user('test_user_001')
     
     if user_accounts:
-        print(f"   ℹ️  User already has {len(user_accounts)} accounts")
+        print(f"User already has {len(user_accounts)} accounts")
         account_ids = [acc['id'] for acc in user_accounts]
     else:
         account_ids = []
@@ -107,7 +107,7 @@ def create_test_data(db_models: Database):
                 cash_interest=validated['cash_interest']
             )
             account_ids.append(acc_id)
-            print(f"   ✅ Created account: {validated['account_name']}")
+            print(f"Created account: {validated['account_name']}")
     
     # Create test positions in first account (401k)
     if account_ids:
@@ -123,7 +123,7 @@ def create_test_data(db_models: Database):
         existing_positions = db_models.positions.find_by_account(account_id)
         
         if existing_positions:
-            print(f"   ℹ️  Account already has {len(existing_positions)} positions")
+            print(f"Account already has {len(existing_positions)} positions")
         else:
             for symbol, quantity in positions:
                 # Validate position with Pydantic
@@ -138,7 +138,7 @@ def create_test_data(db_models: Database):
                     validated['symbol'],
                     validated['quantity']
                 )
-                print(f"   ✅ Added position: {quantity} shares of {symbol}")
+                print(f"Added position: {quantity} shares of {symbol}")
 
 
 def main():
@@ -149,7 +149,7 @@ def main():
                        help='Skip dropping tables (just reload data)')
     args = parser.parse_args()
     
-    print("🚀 Database Reset Script")
+    print("Database Reset Script")
     print("=" * 50)
     
     # Initialize database
@@ -161,41 +161,41 @@ def main():
         drop_all_tables(db)
         
         # Run migrations
-        print("\n📝 Running migrations...")
+        print("\nRunning migrations...")
         import subprocess
         result = subprocess.run(['uv', 'run', 'run_migrations.py'], 
                               capture_output=True, text=True)
         
         if result.returncode != 0:
-            print("❌ Migration failed!")
+            print("Migration failed!")
             print(result.stderr)
             sys.exit(1)
         else:
-            print("✅ Migrations completed")
+            print("Migrations completed")
     
     # Load seed data
-    print("\n🌱 Loading seed data...")
+    print("\nLoading seed data...")
     import subprocess
     result = subprocess.run(['uv', 'run', 'seed_data.py'], 
                           capture_output=True, text=True)
     
     if result.returncode != 0:
-        print("❌ Seed data failed!")
+        print("Seed data failed!")
         print(result.stderr)
         sys.exit(1)
     else:
         # Extract instrument count from output
         if '22/22 instruments loaded' in result.stdout:
-            print("✅ Loaded 22 instruments")
+            print("Loaded 22 instruments")
         else:
-            print("✅ Seed data loaded")
+            print("Seed data loaded")
     
     # Create test data if requested
     if args.with_test_data:
         create_test_data(db_models)
     
     # Final verification
-    print("\n🔍 Final verification...")
+    print("\nFinal verification...")
     
     # Count records
     tables = ['users', 'instruments', 'accounts', 'positions', 'jobs']
@@ -205,10 +205,10 @@ def main():
         print(f"   • {table}: {count} records")
     
     print("\n" + "=" * 50)
-    print("✅ Database reset complete!")
+    print("Database reset complete!")
     
     if args.with_test_data:
-        print("\n📝 Test user created:")
+        print("\nTest user created:")
         print("   • User ID: test_user_001")
         print("   • 3 accounts (401k, Roth IRA, Taxable)")
         print("   • 5 positions in 401k account")
