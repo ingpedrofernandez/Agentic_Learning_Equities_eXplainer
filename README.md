@@ -5,5 +5,5 @@ The Agentic Learning Equities Explainer
 The Explainer will help users:
 - Understand their investment portfolios
 - Plan for retirement
-- Get personalized financial advice
+- Get personalized financial advice and
 - Track market trends and opportunities
