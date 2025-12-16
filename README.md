@@ -1,4 +1,4 @@
-the Agentic Learning Equities Explainer
+The Agentic Learning Equities Explainer
 
 ## Multi-agent Enterprise-Grade SaaS Financial Planner
 
